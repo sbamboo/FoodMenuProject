@@ -1,7 +1,7 @@
 # FoodMenu - PHP WebService API
 ## Members
 - Simon Kalmi Claesson (@sbamboo)
-- Arvid Ersson (@...)
+- Arvid Ersson (@Astikornipal)
 - Otis Gustafsson (@bumblebroo)
 
 *NTI Gymnasiet Skövde - 2025 - TE3s*
