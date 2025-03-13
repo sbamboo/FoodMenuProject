@@ -2,7 +2,7 @@
 ## Members
 - Simon Kalmi Claesson (@sbamboo)
 - Arvid Ersson (@...)
-- Otis Gustafsson (@Bumblebroo)
+- Otis Gustafsson (@bumblebroo)
 
 *NTI Gymnasiet Skövde - 2025 - TE3s*
 <br><br>
