@@ -32,8 +32,8 @@ function parseUrlParams($url) {
 
 // Function to parse special API markdown blocks before markdown conversion
 function parseSpecialMarkdown($content) {
-    // Find triple ``` code blocks of type api.request, api.response, notice.red, notice.yellow, notice.green and notice.gray
-    preg_match_all('/```(api\.request|api\.response|notice\.red|notice\.yellow|notice\.green|notice\.gray|json)([\s\S]*?)```/', $content, $matches);
+    // Find triple ``` code blocks of type api.request, api.response, notice.red, notice.yellow, notice.green, notice.blue, notice.orange and notice.gray
+    preg_match_all('/```(api\.request|api\.response|notice\.red|notice\.yellow|notice\.green|notice\.blue|notice\.orange|notice\.gray|json)([\s\S]*?)```/', $content, $matches);
     // Iterate the matches
     foreach ($matches[0] as $key => $match) {
         $type = $matches[1][$key];
@@ -57,17 +57,21 @@ function parseSpecialMarkdown($content) {
                 $baseUrlRepl = str_replace(getBaseUrlPart(), '<span class="codeblock_api_url">' . getBaseUrlPart() . '</span>', getBaseUrl());
                 $block = str_replace('{url}', $baseUrlRepl, $block);
                 $block = parseUrlParams($block);
+                
+                // Add blocks
+                $typename = str_replace('api.', '', $type);
+                $block = '<pre class="codeblock_api_' . $typename . ' codeblock_wcopy">' . $block . '</pre>';
             }
 
             // api.response
             else if ($type === 'api.response') {
                 // Color the JSON
                 $block = JsonHighlighter::highlight($block);
-            }
 
-            // Add blocks
-            $typename = str_replace('api.', '', $type);
-            $block = '<pre class="codeblock_api_' . $typename . '">' . $block . '</pre>';
+                // Add blocks
+                $typename = str_replace('api.', '', $type);
+                $block = '<pre class="codeblock_api_' . $typename . '">' . $block . '</pre>';
+            }
         }
         
         // Notices
@@ -94,7 +98,7 @@ function parseSpecialMarkdown($content) {
 // Function to wrap API blocks with <div class="codeblock_api"> before Parsedown
 function wrapApiCodeBlocks($content) {
     // Match when codeblock_api_request is directly followed by codeblock_api_response
-    $content = preg_replace_callback('/<pre class="codeblock_api_request">([\s\S]*?)<\/pre>\s*<pre class="codeblock_api_response">([\s\S]*?)<\/pre>/', function ($matches) {
+    $content = preg_replace_callback('/<pre class="codeblock_api_request codeblock_wcopy">([\s\S]*?)<\/pre>\s*<pre class="codeblock_api_response">([\s\S]*?)<\/pre>/', function ($matches) {
         // Wrap the pair of <pre> blocks inside a <div class="codeblock_api">
         $wrappedBlock = '<div class="codeblock_api">' . $matches[0] . '</div>';
         return $wrappedBlock;
@@ -146,9 +150,10 @@ $parsedContent = $Parsedown->text($markdown);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodMenu API - Group1</title>
+    <title>FoodMenu API - Group1 - Docs</title>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="json.css">
+    <script src="index.js"></script>
 </head>
 <body>
     <main>

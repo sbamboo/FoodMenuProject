@@ -1,4 +1,6 @@
 :root {
+    --codeblock-border-color: #272727;
+    --codeblock-background: #373737;
 }
 
 * {
@@ -7,7 +9,7 @@
 }
 
 body {
-    background-color: #323232;
+    background-color: #303030;
     color: #eeeeee;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -18,9 +20,9 @@ main {
 
 .codeblock_api {
     width: fit-content;
-    border: 1.5px solid black;
+    border: 1.5px solid var(--codeblock-border-color);
     border-radius: 10px;
-    background-color: #3B3B3B;
+    background-color: var(--codeblock-background);
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -32,18 +34,18 @@ pre:not(.notice_yellow)>code,
 pre:not(.notice_green)>code,
 pre:not(.notice_gray)>code {
     width: fit-content;
-    border: 1.5px solid black;
+    border: 1.5px solid var(--codeblock-border-color);
     border-radius: 10px;
-    background-color: #3B3B3B;
+    background-color: var(--codeblock-background);
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 5px;
 }
 p>code {
     width: fit-content;
-    border: 1.5px solid black;
+    border: 1.5px solid var(--codeblock-border-color);
     border-radius: 7px;
-    background-color: #3B3B3B;
+    background-color: var(--codeblock-background);
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 3px;
@@ -54,7 +56,7 @@ p:has(> code) {
 }
 
 .codeblock_api > .codeblock_api_request {
-    border-bottom: 1.5px solid black;
+    border-bottom: 1.5px solid var(--codeblock-border-color);
 }
 
 .codeblock_api_urlparam {
@@ -73,7 +75,7 @@ p:has(> code) {
     padding: 10px;
 }
 
-.notice_red, .notice_yellow, .notice_green, .notice_gray {
+.notice_red, .notice_yellow, .notice_green, .notice_orange, .notice_blue, .notice_gray {
     margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
@@ -89,22 +91,74 @@ p:has(> code) {
     background: rgba(255, 0, 0, 0.1);
     box-shadow: 0 1px 2px rgba(255, 0, 0, 0.3);
     color: #fda7a7;
+    /* Add background gradient to put some white in bottom right corner as if reflection, top-left:red to whiter-red*/
+    /*background: linear-gradient(135deg, rgba(255, 0, 0, 0.1) 50%, rgba(255, 100, 100, 0.25) 90%);*/
 }
 .notice_yellow {
     border: 1.2px solid #d7b65b;
     background: rgba(255, 255, 0, 0.1);
     box-shadow: 0 1px 2px rgba(255, 255, 0, 0.3);
     color: #f7f7a7;
+    /* Add background gradient to put some white in bottom right corner as if reflection, top-left:yellow to whiter-yellow*/
+    /*background: linear-gradient(135deg, rgba(255, 255, 0, 0.1) 50%, rgba(255, 255, 100, 0.25) 90%);*/
 }
 .notice_green {
     border: 1.2px solid #5bc355;
     background: rgba(0, 255, 0, 0.1);
     box-shadow: 0 1px 2px rgba(0, 255, 0, 0.3);
     color: #a7fda7;
+    /* Add background gradient to put some white in bottom right corner as if reflection, top-left:green to whiter-green*/
+    /*background: linear-gradient(135deg, rgba(0, 255, 0, 0.1) 50%, rgba(100, 255, 100, 0.25) 90%);*/
+}
+.notice_orange {
+    border: 1.2px solid #d7a55b;
+    background: rgba(255, 165, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(255, 165, 0, 0.3);
+    color: #f7d7a7;
+    /* Add background gradient to put some white in bottom right corner as if reflection, top-left:orange to whiter-orange*/
+    /*background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 50%, rgba(255, 200, 100, 0.25) 90%);*/
+}
+.notice_blue {
+    border: 1.2px solid #5b9cd7;
+    background: rgba(0, 165, 255, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 165, 255, 0.3);
+    color: #a7dffa;
+    /* Add background gradient to put some white in bottom right corner as if reflection, top-left:blue to whiter-blue*/
+    /*background: linear-gradient(135deg, rgba(0, 165, 255, 0.1) 50%, rgba(100, 200, 255, 0.25) 90%);*/
 }
 .notice_gray {
     border: 1.2px solid #a0a0a0;
     background: rgba(200, 200, 200, 0.1);
     box-shadow: 0 1px 2px rgba(200, 200, 200, 0.3);
     color: #f7f7f7;
+    /* Add background gradient to put some white in bottom right corner as if reflection, top-left:gray to whiter-gray*/
+    /*background: linear-gradient(135deg, rgba(200, 200, 200, 0.1) 50%, rgba(220, 220, 220, 0.25) 90%);*/
+}
+
+.copy-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copy-btn > svg {
+    width: 15px;
+    height: 15px;
+    color: white;
+}
+
+.copy-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.codeblock_wcopy {
+    display: flex;
+    flex-direction: row;
+    position: relative;
 }

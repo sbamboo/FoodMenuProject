@@ -1,0 +1,35 @@
+:root {
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #323232;
+    color: #eeeeee;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+    margin: 20px;
+}
+
+main > h1 {
+    margin-bottom: 15px;
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+a,a:visited,a:active {
+    color: #7979fb;
+}
+a:hover {
+    color: #4c4cfa;
+}
+
