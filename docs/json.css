@@ -1,0 +1,53 @@
+/* Base styling for the JSON container */
+.json-container {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #f8f8f2; /* Light text color */
+  }
+  
+  /* Styling for JSON keys */
+  /* Styling for JSON keys */
+.json-key {
+    color: #9cdcfe; /* Light blue for keys */
+  }
+  
+  /* Styling for JSON strings */
+  .json-string {
+    color: #ce9178; /* Orange-brown for strings */
+  }
+  
+  /* Styling for numbers in JSON */
+  .json-number {
+    color: #b5cea8; /* Light green for numbers */
+  }
+  
+  /* Styling for booleans (true/false) */
+  .json-bool {
+    color: #4ec9b0; /* Teal for booleans */
+  }
+  
+  /* Styling for null values */
+  .json-null {
+    color: #c586c0; /* Lavender for null */
+  }
+  
+  /* Styling for brackets, commas, and colons */
+  .json-brackets,
+  .json-colon,
+  .json-comma {
+    color: #d4d4d4; /* Light gray for structural elements */
+  }
+  
+  /* Adding some spacing between elements */
+  .json-key,
+  .json-string,
+  .json-number,
+  .json-bool,
+  .json-null,
+  .json-brackets,
+  .json-colon,
+  .json-comma {
+    margin: 0;
+    padding: 0;
+  }
+  

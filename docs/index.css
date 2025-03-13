@@ -1,0 +1,110 @@
+:root {
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #323232;
+    color: #eeeeee;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+    margin: 20px;
+}
+
+.codeblock_api {
+    width: fit-content;
+    border: 1.5px solid black;
+    border-radius: 10px;
+    background-color: #3B3B3B;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+pre:not(.codeblock_api_request)>code,
+pre:not(.codeblock_api_response)>code,
+pre:not(.notice_red)>code,
+pre:not(.notice_yellow)>code,
+pre:not(.notice_green)>code,
+pre:not(.notice_gray)>code {
+    width: fit-content;
+    border: 1.5px solid black;
+    border-radius: 10px;
+    background-color: #3B3B3B;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+p>code {
+    width: fit-content;
+    border: 1.5px solid black;
+    border-radius: 7px;
+    background-color: #3B3B3B;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 3px;
+}
+p:has(> code) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.codeblock_api > .codeblock_api_request {
+    border-bottom: 1.5px solid black;
+}
+
+.codeblock_api_urlparam {
+    color: #909090;
+}
+
+.codeblock_api_url {
+    color: #909090;
+}
+
+.codeblock_api_request {
+    padding: 10px;
+}
+
+.codeblock_api_response {
+    padding: 10px;
+}
+
+.notice_red, .notice_yellow, .notice_green, .notice_gray {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    width: fit-content;
+    padding: 7px;
+    backdrop-filter: blur(5px);
+    font-weight: 300;
+    font-size: 0.9em;
+    line-height: 1.2em;
+}
+.notice_red {
+    border: 1.2px solid #c35555;
+    background: rgba(255, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(255, 0, 0, 0.3);
+    color: #fda7a7;
+}
+.notice_yellow {
+    border: 1.2px solid #d7b65b;
+    background: rgba(255, 255, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(255, 255, 0, 0.3);
+    color: #f7f7a7;
+}
+.notice_green {
+    border: 1.2px solid #5bc355;
+    background: rgba(0, 255, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 255, 0, 0.3);
+    color: #a7fda7;
+}
+.notice_gray {
+    border: 1.2px solid #a0a0a0;
+    background: rgba(200, 200, 200, 0.1);
+    box-shadow: 0 1px 2px rgba(200, 200, 200, 0.3);
+    color: #f7f7f7;
+}
