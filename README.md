@@ -14,19 +14,19 @@
 `api.ntigskovde.se/.../gr1/foodmenu/docs`
 
 ### Retrieval
-Get by date: *(Converts to year and week number)*
+Get by date: *(Converts to year and week number)*<br>
 `api.ntigskovde.se/.../gr1/foodmenu?date=2025-03-13`
 
-Get by year and week:
+Get by year and week:<br>
 `api.ntigskovde.se/.../gr1/foodmenu?year=2025&week=11`
 
-Get by only week number: *(Resolves current year)*
+Get by only week number: *(Resolves current year)*<br>
 `api.ntigskovde.se/.../gr1/foodmenu?week=11`
 
-Get by only year: *(Returns a list of the entries for the weeks, non-indexed but week-1 is entry 1, number of weeks depends on year)*
+Get by only year: *(Returns a list of the entries for the weeks, non-indexed but week-1 is entry 1, number of weeks depends on year)*<br>
 `api.ntigskovde.se/.../gr1/foodmenu?year=2025` => `{}`
 
-**Al of the above may add the param ?excludeWeekends and ?excludeRedDays**
+**Al of the above may add the param ?excludeWeekends and ?excludeRedDays**<br>
 **Aswell as ?day being an index from 1-7 if list does not include 7 entries and day-index is the amount the return is empty**
 <br><br>
 
