@@ -17,6 +17,17 @@ function seededShuffle(array $items, string $seed): array {
     return $items;
 }
 
+// Function to get the entries from ./foodslist.json
+function getEntries(): array {
+    // Read the JSON file
+    $json = file_get_contents('./foodslist.json');
+    
+    // Decode the JSON file
+    $entries = json_decode($json, true);
+    
+    // Return [[...veggy_entries...],[...non_veggy_entries...]]
+}
+
 // Function to get the seed from the URL
 function getSeed(): array {
     // ?date=yyyy-mm-dd (one entry)
