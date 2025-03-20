@@ -155,6 +155,16 @@ In each request `format` contains the api-communications format version and `sta
     }
 }
 ```
+
+### API Errors
+Incase the api encounters an error rather then a `failed` request, the return is in the format of:
+```jsonc
+{
+    "error": "<string:error>",
+    "msg": "<string:optional>"
+}
+```
+
 <br><br>
 
 ## Day strings
