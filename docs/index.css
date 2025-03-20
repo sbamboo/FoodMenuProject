@@ -75,7 +75,7 @@ p:has(> code) {
     padding: 10px;
 }
 
-.notice_red, .notice_yellow, .notice_green, .notice_orange, .notice_blue, .notice_gray {
+.notice_red, .notice_yellow, .notice_green, .notice_orange, .notice_blue, .notice_gray, .notice_purple {
     margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
@@ -133,6 +133,14 @@ p:has(> code) {
     color: #f7f7f7;
     /* Add background gradient to put some white in bottom right corner as if reflection, top-left:gray to whiter-gray*/
     /*background: linear-gradient(135deg, rgba(200, 200, 200, 0.1) 50%, rgba(220, 220, 220, 0.25) 90%);*/
+}
+.notice_purple {
+    border: 1.2px solid #a55bd7;
+    background: rgba(165, 0, 255, 0.1);
+    box-shadow: 0 1px 2px rgba(165, 0, 255, 0.3);
+    color: #d7a7fd;
+    /* Add background gradient to put some white in bottom right corner as if reflection, top-left:purple to whiter-purple*/
+    /*background: linear-gradient(135deg, rgba(165, 0, 255, 0.1) 50%, rgba(200, 100, 255, 0.25) 90%);*/
 }
 
 .copy-btn {

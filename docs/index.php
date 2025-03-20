@@ -32,8 +32,8 @@ function parseUrlParams($url) {
 
 // Function to parse special API markdown blocks before markdown conversion
 function parseSpecialMarkdown($content) {
-    // Find triple ``` code blocks of type api.request, api.response, notice.red, notice.yellow, notice.green, notice.blue, notice.orange and notice.gray
-    preg_match_all('/```(api\.request|api\.response|notice\.red|notice\.yellow|notice\.green|notice\.blue|notice\.orange|notice\.gray|json)([\s\S]*?)```/', $content, $matches);
+    // Find triple ``` code blocks of type api.request, api.response, notice.red, notice.yellow, notice.green, notice.blue, notice.orange, notice.purple and notice.gray
+    preg_match_all('/```(api\.request|api\.response|notice\.red|notice\.yellow|notice\.green|notice\.blue|notice\.orange|notice\.purple|notice\.gray|json)([\s\S]*?)```/', $content, $matches);
     // Iterate the matches
     foreach ($matches[0] as $key => $match) {
         $type = $matches[1][$key];
