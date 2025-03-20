@@ -108,6 +108,7 @@ function getSeed(): array {
 }
 
 // Function to filter the menu items (?excludeWeekends, ?excludeRedDays, ?day=<int:1-7> if day index is more then entries return empty)
+// $options is ["excludeWeekends"=>bool, "excludeRedDays"=>bool, "day"=>int] where each option is optional
 function filterItems(array $items, array $options): array {
     // Filter out weekends
     
