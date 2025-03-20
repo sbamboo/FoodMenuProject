@@ -23,9 +23,20 @@ function getEntries(): array {
     $json = file_get_contents('./foodslist.json');
     
     // Decode the JSON file
-    $entries = json_decode($json, true);
+    $lists = json_decode($json, true);
     
     // Return [[...veggy_entries...],[...non_veggy_entries...]]
+
+    // Ensure "veggy" and "non_veggy" fields
+    if (!array_key_exists('veggy', $lists)) {
+        $lists['veggy'] = [];
+    }
+    if (!array_key_exists('non_veggy', $lists)) {
+        $lists['non_veggy'] = [];
+    }
+
+    // Return the entries
+    return [$lists['veggy'], $lists['non_veggy']];
 }
 
 // Function to get the seed from the URL
