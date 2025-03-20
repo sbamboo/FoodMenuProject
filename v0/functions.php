@@ -99,12 +99,27 @@ function explodeDish(string $dish): array {
 }
 
 // Function to get the seed from the URL
+// Return ["<entrypoint_name>", [...seeds...]]
 function getSeed(): array {
     // ?date=yyyy-mm-dd (one entry)
     // ?year=yyyy&week=ww (one entry)
     // ?week=ww (current year, one entry)
     // ?year=yyyy (returns seed for all weeks in year)
     // Else return seed for current week of the current year
+}
+
+function getOptionsFromURL(): array {
+    $options = [
+        "excludeWeekends" => false,
+        "excludeRedDays" => false,
+        "day" => null
+    ];
+
+    // ?excludeWeekends
+    // ?excludeRedDays
+    // ?day=<int:1-7>
+
+    return $options;
 }
 
 // Function to filter the menu items (?excludeWeekends, ?excludeRedDays, ?day=<int:1-7> if day index is more then entries return empty)
@@ -115,6 +130,29 @@ function filterItems(array $items, array $options): array {
     // Filter out red days
     
     // Filter out specific day
+}
+
+// Function to get {"weekday":bool, "redday":bool, "day":int/null} depending on options
+function getOptionFilters(array $options): array {
+    $filters = [
+        "weekday" => false,
+        "redday" => false,
+        "day" => null
+    ];
+
+    if (array_key_exists('excludeWeekends', $options)) {
+        $filters['weekday'] = $options['excludeWeekends'];
+    }
+
+    if (array_key_exists('excludeRedDays', $options)) {
+        $filters['redday'] = $options['excludeRedDays'];
+    }
+
+    if (array_key_exists('day', $options)) {
+        $filters['day'] = $options['day'];
+    }
+
+    return $filters;
 }
 
 ?>

@@ -5,9 +5,14 @@ require('functions.php');
 // JSON Content-Type header
 header('Content-Type: application/json; charset=utf-8');
 
+// Get filter options
+$options = getOptionsFromURL();
+
 // Get the seeds
-//$seeds = getSeed(); //MARK: For now hardcode
-$seeds = ["2025;12"];
+//$seed_info = getSeed(); //MARK: For now hardcode
+$seed_info = ["/v0/foodmenu/week",["2025;12"]];
+$seeds = $seed_info[1];
+$entrypoint_name = $seed_info[0];
 
 // Get the entries for "veggy" and "non_veggy"
 $entries = getEntries();
@@ -21,7 +26,16 @@ foreach ($seeds as $seed) {
     $weeks[$week_number] = generateRandomWeek($seed, $veggy_entries, $non_veggy_entries);
 }
 
-echo json_encode($weeks, JSON_UNESCAPED_UNICODE);
+// Assemble the response
+$response = [
+    'format' => 0,
+    "status" => "success",
+    "endpoint_name" => $entrypoint_name,
+    "filters" => getOptionFilters($options),
+    "weeks" => $weeks
+];
+
+echo json_encode($response, JSON_UNESCAPED_UNICODE);
 
 
 // FOR NOW, JUST RETURN AN ERROR
