@@ -46,6 +46,26 @@ In codeblocks with `api.request` we replace `{url}` with span-formatted string. 
 In codeblocks with `api.response` or `json` we color format the text as JSON using spans.
 When `api.request` codeblocks next to `api.response` codeblocks they get styled together.
 For codeblocks with `notice.red`/`notice.yellow`/`notice.green`/`notice.orange`/`notice.blue`/`notice.gray`/`notice.purple` they get some padding and coloring to signify them on the site.
+### PHP
+Randomization
+```php
+// Seed: "{year};{week}" where year is "yyyy" and week is week-number
+function seededShuffle(array $items, string $seed): array {
+    // Convert seed to an integer hash
+    $hash = crc32($seed);
+    
+    // Set seed for randomization
+    mt_srand($hash);
+    
+    // Shuffle the items based on the seed
+    shuffle($items);
+    
+    // Reset the random generator to avoid affecting other parts of the script
+    mt_srand();
+    
+    return $items;
+}
+```
 <br><br>
 
 ## Returned data
