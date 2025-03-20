@@ -85,7 +85,10 @@ In each request `format` contains the api-communications format version and `sta
     },
     "weeks": {
         "11": {
-            "1": ["Pankakor","Pankakor med sylt och grädde."]
+            "1": {
+                "vegetarian": ["Pankakor","Pankakor med sylt och grädde."],
+                "non_vegetarian": ["Pankakor","Pankakor med sylt och grädde."]
+            }
         }
     }
 }
@@ -119,7 +122,10 @@ In each request `format` contains the api-communications format version and `sta
     },
     "weeks": {
         "11": {
-            "1": ["Pankakor","Pankakor med sylt och grädde."],
+            "1": {
+                "vegetarian": ["Pankakor","Pankakor med sylt och grädde."],
+                "non_vegetarian": ["Pankakor","Pankakor med sylt och grädde."]
+            },
             ...
         }
     }
@@ -139,7 +145,10 @@ In each request `format` contains the api-communications format version and `sta
     },
     "weeks": {
         "1": {
-            "1": ["Pankakor","Pankakor med sylt och grädde."],
+            "1": {
+                "vegetarian": ["Pankakor","Pankakor med sylt och grädde."],
+                "non_vegetarian": ["Pankakor","Pankakor med sylt och grädde."]
+            },
             ...
         },
         ...
