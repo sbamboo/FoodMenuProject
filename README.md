@@ -11,7 +11,10 @@
 ## Expected endpoints
 
 ### Docs
-`api.ntigskovde.se/.../gr1/foodmenu/docs`
+`api.ntigskovde.se/.../gr1/foodmenu/docs`<br>
+It is also possible to request docs for a specific version using<br>
+`api.ntigskovde.se/.../gr1/foodmenu/docs/?ver=<ver>` example `api.ntigskovde.se/.../gr1/foodmenu/docs/?ver=v0`<br>
+*(If no version is given or the requested one is invalid the latest is used)*
 
 ### Retrieval
 Get by date: *(Converts to year and week number)*<br>
@@ -47,20 +50,22 @@ For codeblocks with `notice.red`/`notice.yellow`/`notice.green`/`notice.orange`/
 
 ## Returned data
 
+In each request `format` contains the api-communications format version and `status` contains either `success` or `failed`.
+
 ### One day (Found)
 ```jsonc
 {
     "format": 0,
+    "status": "success",
     "endpoint_name": "/v0/foodmenu/day",
     "filters": {
         "weekday": false,
         "redday": false,
         "day": 1
     },
-    "query_was_valid": true,
     "weeks": {
         "11": {
-            "1": "Pankakor; Pankakor med sylt och grädde."
+            "1": ["Pankakor","Pankakor med sylt och grädde."]
         }
     }
 }
@@ -70,13 +75,13 @@ For codeblocks with `notice.red`/`notice.yellow`/`notice.green`/`notice.orange`/
 ```jsonc
 {
     "format": 0,
+    "status": "failed",
     "endpoint_name": "/v0/foodmenu/day",
     "filters": {
         "weekday": true,
         "redday": false,
         "day": 7
     },
-    "query_was_valid": false,
     "weeks": {}
 }
 ```
@@ -85,16 +90,16 @@ For codeblocks with `notice.red`/`notice.yellow`/`notice.green`/`notice.orange`/
 ```jsonc
 {
     "format": 0,
+    "status": "success",
     "endpoint_name": "/v0/foodmenu/week",
     "filters": {
         "weekday": false,
         "redday": false,
         "day": null
     },
-    "query_was_valid": true,
     "weeks": {
         "11": {
-            "1": "Pankakor; Pankakor med sylt och grädde.",
+            "1": ["Pankakor","Pankakor med sylt och grädde."],
             ...
         }
     }
@@ -105,16 +110,16 @@ For codeblocks with `notice.red`/`notice.yellow`/`notice.green`/`notice.orange`/
 ```jsonc
 {
     "format": 0,
+    "status": "success",
     "endpoint_name": "/v0/foodmenu/year",
     "filters": {
         "weekday": false,
         "redday": false,
         "day": null
     },
-    "query_was_valid": true,
     "weeks": {
         "1": {
-            "1": "Pankakor; Pankakor med sylt och grädde.",
+            "1": ["Pankakor","Pankakor med sylt och grädde."],
             ...
         },
         ...
@@ -124,4 +129,5 @@ For codeblocks with `notice.red`/`notice.yellow`/`notice.green`/`notice.orange`/
 <br><br>
 
 ## Day strings
-Since the `foodslist.json` contains strings in the format `<food_name>; <food_description>` the returned day strings are also in the same format.
+Since the `foodslist.json` contains strings in the format `<food_name>; <food_description>` the api returns both dish name and description. This as a set or two `["<food_name>","<food_description>"]` incase no semi-colon in the list a set of two is still returned but `["<food_name>",""]` *(Here the entire entry is interprited as name)*<br>
+**Note! Incase a semicolon is in the list but one side is empty the returned field is also empty, so for example `;<food_description>` gives `["","<food_description>"]**
