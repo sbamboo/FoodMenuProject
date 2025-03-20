@@ -119,6 +119,8 @@ function getOptionsFromURL(): array {
     // ?excludeRedDays
     // ?day=<int:1-7>
 
+    // If ?date get day from it
+
     return $options;
 }
 
@@ -130,6 +132,8 @@ function filterItems(array $items, array $options): array {
     // Filter out red days
     
     // Filter out specific day
+
+    return $items;
 }
 
 // Function to get {"weekday":bool, "redday":bool, "day":int/null} depending on options

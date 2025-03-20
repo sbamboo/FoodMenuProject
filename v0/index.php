@@ -32,7 +32,7 @@ $response = [
     "status" => "success",
     "endpoint_name" => $entrypoint_name,
     "filters" => getOptionFilters($options),
-    "weeks" => $weeks
+    "weeks" => filterItems($weeks)
 ];
 
 echo json_encode($response, JSON_UNESCAPED_UNICODE);
