@@ -29,7 +29,7 @@ Get by only week number: *(Resolves current year)*<br>
 Get by only year: *(Returns a list of the entries for the weeks, non-indexed but week-1 is entry 1, number of weeks depends on year)*<br>
 `api.ntigskovde.se/.../gr1/foodmenu/v0?year=2025` => `{}`
 
-**Al of the above may add the param ?excludeWeekends and ?excludeRedDays**<br>
+**All of the above may add the param ?excludeWeekends and ?excludeRedDays**<br>
 **Aswell as ?day being an index from 1-7 if list does not include 7 entries and day-index is the amount the return is empty**
 <br><br>
 
@@ -37,7 +37,7 @@ Get by only year: *(Returns a list of the entries for the weeks, non-indexed but
 ## Functionaliy
 ### API
 1. The dishes for a week are randomised using a seed `<year>;<week>`, which generates 7 entries.
-2. If a red-day or weekday filter was applied we filter out thoose.
+2. If a red-day or weekday filter was applied we filter out those.
 3. If a day was requested we retrieve the day, if an entire year we return a list of all, else we return the week.
 ### Docs
 For the docs site `/docs/index.php` takes an optional url-param `?ver=` then renders `/docs/{ver}.md`, if no version is given it defaults to the latest.
