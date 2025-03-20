@@ -108,39 +108,138 @@ function getSeed(): array {
     // Else return seed for current week of the current year
 }
 
-function getOptionsFromURL(): array {
+function getOptionsFromURL(array $params): array {
     $options = [
         "excludeWeekends" => false,
         "excludeRedDays" => false,
         "day" => null
     ];
 
-    // ?excludeWeekends
-    // ?excludeRedDays
-    // ?day=<int:1-7>
+    // ?excludeWeekends url parameter
+    if (array_key_exists('excludeWeekends', $params)) {
+        $options['excludeWeekends'] = true;
+    }
+
+    // ?excludeRedDays url parameter
+    if (array_key_exists('excludeRedDays', $params)) {
+        $options['excludeRedDays'] = true;
+    }
+
+    // ?day=<int:1-7> url parameter
+    if (array_key_exists('day', $params)) {
+        $options['day'] = intval($params['day']);
+    }
 
     // If ?date get day from it
+    if (array_key_exists('date', $params)) {
+        $date = new DateTime($params['date']);
+        $options['day'] = intval($date->format('N'));
+    }
 
     return $options;
 }
 
-// Function to filter the menu items (?excludeWeekends, ?excludeRedDays, ?day=<int:1-7> if day index is more then entries return empty)
-// $options is ["excludeWeekends"=>bool, "excludeRedDays"=>bool, "day"=>int] where each option is optional
-function filterItems(array $items, array $options): array {
-    // Filter out weekends
+function getHolidays($year) {
+    $holidays = [];
+    $weekendDays = [];
+
+    // Fixed-date holidays
+    $fixedHolidays = [
+        "$year-01-01", // Nyårsdagen
+        "$year-01-06", // Trettondedag jul
+        "$year-05-01", // Första maj
+        "$year-06-06", // Sveriges nationaldag
+        "$year-12-24", // Julafton
+        "$year-12-25", // Juldagen
+        "$year-12-26", // Annandag jul
+        "$year-12-31", // Nyårsafton
+    ];
+
+    // Easter-based holidays
+    $easterSunday = easter_date($year);
+    $holidays[] = date("Y-m-d", $easterSunday - 3 * 86400); // Skärtorsdagen
+    $holidays[] = date("Y-m-d", $easterSunday - 2 * 86400); // Långfredagen
+    $holidays[] = date("Y-m-d", $easterSunday - 1 * 86400); // Påskafton
+    $holidays[] = date("Y-m-d", $easterSunday);             // Påskdagen
+    $holidays[] = date("Y-m-d", $easterSunday + 1 * 86400); // Annandag påsk
+    $holidays[] = date("Y-m-d", $easterSunday + 39 * 86400); // Kristi himmelsfärdsdag
+    $holidays[] = date("Y-m-d", $easterSunday + 49 * 86400); // Pingstafton
+    $holidays[] = date("Y-m-d", $easterSunday + 50 * 86400); // Pingstdagen
+
+    // Midsummer (Friday & Saturday between June 19-25)
+    for ($d = 19; $d <= 25; $d++) {
+        $date = strtotime("$year-06-$d");
+        if (date("N", $date) == 5) { // Friday
+            $holidays[] = date("Y-m-d", $date); // Midsommarafton
+            $holidays[] = date("Y-m-d", $date + 86400); // Midsommardagen (Saturday)
+            break;
+        }
+    }
+
+    // All Saints' Day (Saturday between October 31 and November 6)
+    $startDate = strtotime("$year-10-31");
+    $endDate = strtotime("$year-11-06");
+
+    for ($date = $startDate; $date <= $endDate; $date += 86400) {
+        if (date("N", $date) == 6) { // Saturday
+            $holidays[] = date("Y-m-d", $date); // Alla helgons dag
+            $holidays[] = date("Y-m-d", $date - 86400); // Allhelgonaafton (Friday)
+            break;
+        }
+    }
+
+    // Collect all weekends (Saturdays & Sundays)
+    $start = strtotime("$year-01-01");
+    $end = strtotime("$year-12-31");
+    for ($date = $start; $date <= $end; $date += 86400) {
+        if (date("N", $date) >= 6) { // Saturday (6) or Sunday (7)
+            $weekendDays[] = date("Y-m-d", $date);
+        }
+    }
+
+    // Merge fixed holidays and sort all dates
+    $holidays = array_merge($holidays, $fixedHolidays);
+    sort($holidays);
+
+    // Ensure uniqueness for holidays and weekends
+    $holidays = array_values(array_unique($holidays));
+    $weekendDays = array_values(array_unique($weekendDays));
+
+    return [$holidays, $weekendDays]; // Return both arrays
+}
+
+// Function to filter the menu items (?excludeWeekends, ?excludeHolidays, ?day=<int:1-7> if day index is more then entries return empty)
+// $options is ["excludeWeekends"=>bool, "excludeHolidays"=>bool, "day"=>int] where each option is optional
+function filterItems(string $year, array $items, array $options): array {
+    $filters = getHolidays($year);
+    $holidays = $filters[0];
+    $weekendDays = $filters[1];
+ 
+    // Filter out weekends use array_key_exists
+    if (array_key_exists('excludeWeekends', $options) && $options['excludeWeekends'] == true) {
+        $items = array_diff($items, $weekendDays);
+    }
     
-    // Filter out red days
+    // Filter out holidays
+    if (array_key_exists('excludeHolidays', $options) && $options['excludeHolidays'] == true) {
+        $items = array_diff($items, $holidays);
+    }
     
-    // Filter out specific day
+    // Filter out specific day (day is index 1-7 of a week)
+    if (array_key_exists('day', $options) && $options['day'] !== null) {
+        $items = array_filter($items, function($item) use ($options) {
+            return date("N", strtotime($item)) == $options['day'];
+        });
+    }
 
     return $items;
 }
 
-// Function to get {"weekday":bool, "redday":bool, "day":int/null} depending on options
+// Function to get {"weekday":bool, "holiday":bool, "day":int/null} depending on options
 function getOptionFilters(array $options): array {
     $filters = [
-        "weekday" => false,
-        "redday" => false,
+        "weekday" => true,
+        "holiday" => true,
         "day" => null
     ];
 
@@ -148,8 +247,8 @@ function getOptionFilters(array $options): array {
         $filters['weekday'] = $options['excludeWeekends'];
     }
 
-    if (array_key_exists('excludeRedDays', $options)) {
-        $filters['redday'] = $options['excludeRedDays'];
+    if (array_key_exists('excludeHolidays', $options)) {
+        $filters['holiday'] = $options['excludeHolidays'];
     }
 
     if (array_key_exists('day', $options)) {

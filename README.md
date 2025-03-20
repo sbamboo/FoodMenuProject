@@ -31,7 +31,7 @@ Get by only year: *(Returns a list of the entries for the weeks, non-indexed but
 
 
 Incase no parameters are given the current year and week is returned.
-**All of the above may add the param ?excludeWeekends and ?excludeRedDays**<br>
+**All of the above may add the param ?excludeWeekends and ?excludeHolidays**<br>
 **Aswell as ?day being an index from 1-7 if list does not include 7 entries and day-index is the amount the return is empty**
 <br><br>
 
@@ -39,7 +39,7 @@ Incase no parameters are given the current year and week is returned.
 ## Functionaliy
 ### API
 1. The dishes for a week are randomised using a seed `<year>;<week>`, which generates 7 entries.
-2. If a red-day or weekday filter was applied we filter out those.
+2. If a holiday or weekday filter was applied we filter out those.
 3. If a day was requested we retrieve the day, if an entire year we return a list of all, else we return the week.
 ### Docs
 For the docs site `/docs/index.php` takes an optional url-param `?ver=` then renders `/docs/{ver}.md`, if no version is given it defaults to the latest.
@@ -81,8 +81,8 @@ In each request `format` contains the api-communications format version and `sta
     "status": "success",
     "endpoint_name": "/v0/foodmenu/day",
     "filters": {
-        "weekday": false,
-        "redday": false,
+        "weekday": true,
+        "holiday": true,
         "day": 1
     },
     "weeks": {
@@ -104,7 +104,7 @@ In each request `format` contains the api-communications format version and `sta
     "endpoint_name": "/v0/foodmenu/day",
     "filters": {
         "weekday": true,
-        "redday": false,
+        "holiday": true,
         "day": 7
     },
     "weeks": {}
@@ -118,8 +118,8 @@ In each request `format` contains the api-communications format version and `sta
     "status": "success",
     "endpoint_name": "/v0/foodmenu/week",
     "filters": {
-        "weekday": false,
-        "redday": false,
+        "weekday": true,
+        "holiday": true,
         "day": null
     },
     "weeks": {
@@ -141,8 +141,8 @@ In each request `format` contains the api-communications format version and `sta
     "status": "success",
     "endpoint_name": "/v0/foodmenu/year",
     "filters": {
-        "weekday": false,
-        "redday": false,
+        "weekday": true,
+        "holiday": true,
         "day": null
     },
     "weeks": {
