@@ -29,6 +29,8 @@ Get by only week number: *(Resolves current year)*<br>
 Get by only year: *(Returns a list of the entries for the weeks, non-indexed but week-1 is entry 1, number of weeks depends on year)*<br>
 `api.ntigskovde.se/.../gr1/foodmenu/v0?year=2025` => `{}`
 
+Incase no parameters are given the current year and week is returned.
+
 **Al of the above may add the param ?excludeWeekends and ?excludeRedDays**<br>
 **Aswell as ?day being an index from 1-7 if list does not include 7 entries and day-index is the amount the return is empty**
 <br><br>
