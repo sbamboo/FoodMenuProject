@@ -113,30 +113,34 @@ function getSeed(): array {
 
     $seeds = [];
     if(!empty($date)){
+        // ?date=yyyy-mm-dd
         $year = explode("-", $date)[0];
 
         $dateTime = new DateTime($date);
         $week = $dateTime->format("W");
     }
     else{
+        // ?year=yyyy&week=ww
         $year = $_REQUEST["year"];
         $week = $_REQUEST["week"];
 
         if(empty($year) && !empty($week)){
+            // ?week=ww
             $year = date("Y");
         } else if(!empty($year) && empty($week)){
+            // ?year=yyyy
             for ($i=0; $i < 52; $i++) { 
                 $seeds.array_push($year . ":" . $i);
             }
-            return $seeds
+            return $seeds;
         } else{
+            // Seed for this week
             $year = date("Y");
 
-            $date = date("Y-m-d")
+            $date = date("Y-m-d");
             $dateTime = new DateTime($date);
             $week = $dateTime->format("W");
         }
-
     }
 
     $seeds[0] = $year . ":" . $week;
