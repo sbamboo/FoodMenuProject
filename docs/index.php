@@ -151,6 +151,7 @@ $parsedContent = $Parsedown->text($markdown);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodMenu API - Group1 - Docs</title>
+    <link rel="stylesheet" href="../fonts.css">
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="json.css">
     <script src="index.js"></script>
