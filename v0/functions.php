@@ -106,6 +106,41 @@ function getSeed(): array {
     // ?week=ww (current year, one entry)
     // ?year=yyyy (returns seed for all weeks in year)
     // Else return seed for current week of the current year
+
+    $date = $_REQUEST["date"];
+    $year;
+    $week;
+
+    $seeds = [];
+    if(!empty($date)){
+        $year = explode("-", $date)[0];
+
+        $dateTime = new DateTime($date);
+        $week = $dateTime->format("W");
+    }
+    else{
+        $year = $_REQUEST["year"];
+        $week = $_REQUEST["week"];
+
+        if(empty($year) && !empty($week)){
+            $year = date("Y");
+        } else if(!empty($year) && empty($week)){
+            for ($i=0; $i < 52; $i++) { 
+                $seeds.array_push($year . ":" . $i);
+            }
+            return $seeds
+        } else{
+            $year = date("Y");
+
+            $date = date("Y-m-d")
+            $dateTime = new DateTime($date);
+            $week = $dateTime->format("W");
+        }
+
+    }
+
+    $seeds[0] = $year . ":" . $week;
+    return $seeds;
 }
 
 function getOptionsFromURL(array $params): array {
