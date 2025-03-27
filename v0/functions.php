@@ -108,6 +108,16 @@ function getSeed(): array {
     // ?year=yyyy (returns seed for all weeks in year)
     // Else return seed for current week of the current year
 
+    /*
+    req_context:
+        /v0/foodmenu/date
+        /v0/foodmenu/year
+        /v0/foodmenu/week
+    */
+
+    // If ?date seed is year and week-nr for that date, also set $_REQUEST["day"] to string-of-int for the days index in the week
+
+    $req_context = "/v0/foodmenu/";
     $date = $_REQUEST["date"];
     $year;
     $week;
@@ -119,6 +129,8 @@ function getSeed(): array {
 
         $dateTime = new DateTime($date);
         $week = $dateTime->format("W");
+
+        $req_context = $req_context . "date";
     }
     else{
         // ?year=yyyy&week=ww
@@ -126,26 +138,22 @@ function getSeed(): array {
         $week = $_REQUEST["week"];
 
         if(empty($year) && !empty($week)){
-            // ?week=ww
             $year = date("Y");
+            $req_context = $req_context . "week";
         } else if(!empty($year) && empty($week)){
             // ?year=yyyy
             for ($i=0; $i < 52; $i++) { 
-                $seeds.array_push($year . ":" . $i);
+                $seeds.array_push($year . ";" . $i);
             }
-            return $seeds;
         } else{
-            // Seed for this week
-            $year = date("Y");
-
-            $date = date("Y-m-d");
-            $dateTime = new DateTime($date);
-            $week = $dateTime->format("W");
+            //Missing values ????
         }
     }
-
-    $seeds[0] = $year . ":" . $week;
-    return $seeds;
+    
+    if($seeds == []){
+        $seeds[0] = $year . ";" . $week;
+    }
+    return [$req_context, $seeds];
 }
 
 function getOptionsFromURL(array $params): array {
