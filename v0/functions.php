@@ -118,7 +118,9 @@ function getSeed(): array {
     // If ?date seed is year and week-nr for that date, also set $_REQUEST["day"] to string-of-int for the days index in the week
 
     $req_context = "/v0/foodmenu/";
-    $date = $_REQUEST["date"];
+    if(array_key_exists("date", $_REQUEST)){
+        $date = $_REQUEST["date"];
+    }
     $year;
     $week;
 
@@ -134,16 +136,21 @@ function getSeed(): array {
     }
     else{
         // ?year=yyyy&week=ww
-        $year = $_REQUEST["year"];
-        $week = $_REQUEST["week"];
+        if(array_key_exists("year", $_REQUEST)){
+            $year = $_REQUEST["year"];
+        }
+
+        if(array_key_exists("week", $_REQUEST)){
+            $week = $_REQUEST["week"];
+        }
 
         if(empty($year) && !empty($week)){
             $year = date("Y");
             $req_context = $req_context . "week";
         } else if(!empty($year) && empty($week)){
             // ?year=yyyy
-            for ($i=0; $i < 52; $i++) { 
-                $seeds.array_push($year . ";" . $i);
+            for ($i=0; $i < 52; $i++) {
+                array_push($seeds, $year . ";" . $i + 1);
             }
         } else{
             //Missing values ????
@@ -303,7 +310,7 @@ function filterItems(string $year, array $items, array $options): array {
     $holidays = convertDatesToYearWeekDay($filters[0]);
     $weekendDays = convertDatesToYearWeekDay($filters[1]);
 
-    print_r($weekendDays);
+    //print_r($weekendDays);
  
     // Filter out weekends use array_key_exists
     if (array_key_exists('excludeWeekends', $options) && $options['excludeWeekends'] == true) {

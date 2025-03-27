@@ -46,8 +46,8 @@ try {
     $options = getOptionsFromURL($_REQUEST);
 
     // Get the seeds
-    // $seed_info = getSeed(); //MARK: For now hardcode
-    $seed_info = ["/v0/foodmenu/week", ["2025;12"]];
+    $seed_info = getSeed(); //MARK: For now hardcode
+    //$seed_info = ["/v0/foodmenu/week", ["2025;12"]];
     $seeds = $seed_info[1];
     $entrypoint_name = $seed_info[0];
 
@@ -56,11 +56,13 @@ try {
     $veggy_entries = $entries[0];
     $non_veggy_entries = $entries[1];
 
-    // Iterate al seeds and call generateRandomWeek setting $weeks[$week_number]
+    // Iterate all seeds and call generateRandomWeek setting $weeks[$week_number]
     $weeks = [];
+    //print_r($seeds);
     foreach ($seeds as $seed) {
-        $year = explode(';', $seed)[0];
-        $week_number = explode(';', $seed)[1];
+        $parsed_seed = explode(';', $seed);
+        $year = $parsed_seed[0];
+        $week_number = $parsed_seed[1];
         $entries = generateRandomWeek(
             $seed,
             $veggy_entries,
