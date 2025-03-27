@@ -38,6 +38,17 @@
     color: #d4d4d4; /* Light gray for structural elements */
   }
   
+  /* Styling for comments */
+  .json-comment {
+    color: #6a9955; /* Dark green for comments */
+  }
+
+  /* Styling for more comments */
+  .json-more-comment {
+    color: #6a9955; /* Dark green for comments */
+  }
+
+
   /* Adding some spacing between elements */
   .json-key,
   .json-string,
@@ -46,7 +57,9 @@
   .json-null,
   .json-brackets,
   .json-colon,
-  .json-comma {
+  .json-comma,
+  .json-comment,
+  .json-more-comment {
     margin: 0;
     padding: 0;
   }

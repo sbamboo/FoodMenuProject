@@ -81,6 +81,7 @@ try {
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
     exit;
 } catch (Throwable $e) {
+    /*
     $e_name = get_class($e);
     // Fatal error handling
     echo json_encode([
@@ -89,5 +90,8 @@ try {
         'status' => 'failed'
     ], JSON_UNESCAPED_UNICODE);
     exit;
+    */
+    // throw it again for now
+    throw $e;
 }
 ?>
