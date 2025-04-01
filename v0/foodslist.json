@@ -1,5 +1,5 @@
 {
-    "veggy": [
+    "non_veggy": [
         "Ostkaka; Ljuvlig ostkaka med sylt och grädde, en söt avslutning",
         "Köttfärs- och potatisbiffar; Saftiga biffar med köttfärs och potatis, serverade med sås",
         "Biff med svampsås; Mör biff med svampsås och potatis, en klassiker",
@@ -71,7 +71,7 @@
         "Biff med svampsås; Grillad biff med svampsås och potatis, en klassiker",
         "Köttfärs- och potatisgratäng; Mustig gratäng med köttfärs och potatis, en värmande rätt"
     ],
-    "non_veggy": [
+    "veggy": [
         "Grönsaksfyllda paprikor; Ugnsbakade paprikor fyllda med ris och grönsaker",
         "Kikärts- och grönsaksgryta; Gryta med kikärtor och grönsaker, serverad med ris",
         "Spenatsallad; Fräsch sallad med spenat, avokado och nötter",
