@@ -6,8 +6,7 @@ require('functions.php');
 header('Content-Type: application/json; charset=utf-8');
 
 // Custom error handler function
-function errorHandler($severity, $message, $file, $line)
-{
+function errorHandler($severity, $message, $file, $line){
     error_log(
         "Error: [$severity] $message in $file on line $line",
         0
@@ -19,11 +18,9 @@ function errorHandler($severity, $message, $file, $line)
 }
 
 // Custom shutdown function to catch fatal errors
-function shutdownHandler()
-{
+function shutdownHandler() {
     $error = error_get_last();
-    if ($error && $error['type'] & (E_ERROR | E_PARSE | E_COMPILE_ERROR |
-            E_CORE_ERROR)) {
+    if ($error && $error['type'] & (E_ERROR | E_PARSE | E_COMPILE_ERROR | E_CORE_ERROR)) {
         // Fatal error occurred
         $errfile = $error['file'];
         $errline = $error['line'];
@@ -41,6 +38,7 @@ function shutdownHandler()
 set_error_handler('errorHandler');
 register_shutdown_function('shutdownHandler');
 
+// Main Logic
 try {
     // Get filter options
     $options = getOptionsFromURL($_REQUEST);
@@ -56,7 +54,7 @@ try {
     $veggy_entries = $entries[0];
     $non_veggy_entries = $entries[1];
 
-    // Iterate all seeds and call generateRandomWeek setting $weeks[$week_number]
+    // Iterate all seeds and call generateRandomWeek to set $weeks[$week_number]
     $weeks = [];
     //print_r($seeds);
     foreach ($seeds as $seed) {
@@ -80,8 +78,10 @@ try {
         "weeks" => $weeks
     ];
 
+    // Return the response
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
     exit;
+
 } catch (Throwable $e) {
     /*
     $e_name = get_class($e);
