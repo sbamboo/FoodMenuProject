@@ -46,7 +46,8 @@ pre:not(.notice_gray)>code {
     margin-bottom: 10px;
     padding: 5px;
 }
-p>code {
+p>code,
+li>code {
     width: fit-content;
     border: 1.5px solid var(--codeblock-border-color);
     border-radius: 7px;

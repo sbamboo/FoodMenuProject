@@ -45,7 +45,7 @@ try {
     $options = getOptionsFromURL($_REQUEST);
 
     // If not $_REQUEST contains either $date or $year or $week return error
-    if (!isset($options['date']) && !isset($options['year']) && !isset($options['week'])) {
+    if (!isset($_REQUEST['date']) && !isset($_REQUEST['year']) && !isset($_REQUEST['week'])) {
         echo json_encode([
             'error' => "MissingParameters",
             'msg' => 'Not all required parameters where given! Please supply either a specific date or alterantively a year and/or week-number. (See api docs)',
