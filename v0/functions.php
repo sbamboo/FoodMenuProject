@@ -209,7 +209,7 @@ function getHolidays($year) {
     ];
 
     // Easter-based holidays
-    $easterSunday = easter_date($year);
+    $easterSunday = easter_date((int)$year);
     $holidays[] = date("Y-m-d", $easterSunday - 3 * 86400); // Skärtorsdagen
     $holidays[] = date("Y-m-d", $easterSunday - 2 * 86400); // Långfredagen
     $holidays[] = date("Y-m-d", $easterSunday - 1 * 86400); // Påskafton
@@ -265,15 +265,15 @@ function getHolidays($year) {
 function convertDatesToYearWeekDay(array $dateStrings): array {
     $result = [];
 
+    // Fill yearWeekDay
+    $weekAndDays = [];
     foreach ($dateStrings as $dateString) {
         try {
             $dateTime = new DateTime($dateString);
-            $year = (int)$dateTime->format('Y');
             $week = (int)$dateTime->format('W');  // ISO-8601 week number
             $dayIndex = (int)$dateTime->format('N'); // ISO-8601 numeric representation of the day (1-7)
 
-            $result[] = [
-                'year' => $year,
+            $weekAndDays[] = [
                 'week' => $week,
                 'day' => $dayIndex,
             ];
@@ -283,17 +283,38 @@ function convertDatesToYearWeekDay(array $dateStrings): array {
         }
     }
 
+    // For each entry in weekAndDays, add it to the result array as [ "string_of_int:week" => ["string_of_int:dayindex"],...]
+    foreach ($weekAndDays as $entry) {
+        $week = $entry['week'];
+        $dayIndex = $entry['day'];
+
+        if (!array_key_exists($week, $result)) {
+            $result[$week] = [];
+        }
+
+        // Append the dayIndex as a string to the week's array
+        array_push($result[$week], "$dayIndex");
+    }
+
     return $result;
 }
 
-// yearWeekDayArray : [ ["year"=>int:yyyy, "week"=>int:weeknr, "day"=>int:index],... ]
-// toFilterArray    : [ "string_of_int:week" => ["string_of_int:dayindex"=><entry>....],... ]
-function filterDateArrays(array $yearWeekDayArray, array $toFilterArray): array {
-    $filteredArray = $toFilterArray;
+// weekAndDays   : [ "string_of_int:week" => ["string_of_int:dayindex"=><entry>....],... ]
+// toFilterArray : ["string_of_int:dayindex"=><entry>....]
+function filterDateArrays(array $weekAndDays, string $weekNumber, array $toFilterArray): array {
+    $filteredArray = [];
 
-    foreach($yearWeekDayArray as $yearWeekDay) {
-        if (array_key_exists( (string) $yearWeekDay["week"], $toFilterArray )) {
-
+    // if weekNumber is not a key in weekAndDays just return it
+    if (!array_key_exists($weekNumber, $weekAndDays)) {
+        return $toFilterArray;
+    } else {
+        $filteredArray = [];
+        // Iterate the weekAndDays array
+        foreach ($toFilterArray as $dayIndex => $day) {
+            // If the $dayIndex is not a key in $weekAndDays[$weekNumber] add it
+            if (!in_array("$dayIndex", $weekAndDays[$weekNumber])) {
+                $filteredArray[$dayIndex] = $day;
+            }
         }
     }
 
@@ -301,23 +322,24 @@ function filterDateArrays(array $yearWeekDayArray, array $toFilterArray): array 
 }
 
 
-// Function to filter the menu items (?excludeWeekends, ?excludeHolidays, ?day=<int:1-7> if day index is more then entries return empty)
+// Function to filter the menu items for a week (?excludeWeekends, ?excludeHolidays, ?day=<int:1-7> if day index is more then entries return empty)
 // $options is ["excludeWeekends"=>bool, "excludeHolidays"=>bool, "day"=>int] where each option is optional
-function filterItems(string $year, array $items, array $options): array {
+function filterItems(string $year, string $weekNumber, array $items, array $options): array {
     $filters = getHolidays($year);
     $holidays = convertDatesToYearWeekDay($filters[0]);
-    $weekendDays = convertDatesToYearWeekDay($filters[1]);
-
-    //print_r($weekendDays);
  
-    // Filter out weekends use array_key_exists
+    // Filter out weekends by removing the 6 8 keys from this weeks array
     if (array_key_exists('excludeWeekends', $options) && $options['excludeWeekends'] == true) {
-        $items = filterDateArrays($weekendDays, $items);
+        foreach ($items as $day => $week) {
+            if ("$day" == "6" || "$day" == "7") {
+                unset($items[$day]);
+            }
+        }
     }
     
     // Filter out holidays
     if (array_key_exists('excludeHolidays', $options) && $options['excludeHolidays'] == true) {
-        $items = filterDateArrays($weekendDays, $items);
+        $items = filterDateArrays($holidays, $weekNumber, $items);
     }
     
     // Filter out specific day (day is index 1-7 of a week)
@@ -331,17 +353,17 @@ function filterItems(string $year, array $items, array $options): array {
 // Function to get {"weekday":bool, "holiday":bool, "day":int/null} depending on options
 function getOptionFilters(array $options): array {
     $filters = [
-        "weekday" => true,
-        "holiday" => true,
+        "no_weekdays" => false,
+        "no_holidays" => false,
         "day" => null
     ];
 
-    if (array_key_exists('excludeWeekends', $options)) {
-        $filters['weekday'] = false;
+    if (array_key_exists('excludeWeekends', $options) && $options['excludeWeekends'] == true) {
+        $filters['no_weekdays'] = true;
     }
 
-    if (array_key_exists('excludeHolidays', $options)) {
-        $filters['holiday'] = false;
+    if (array_key_exists('excludeHolidays', $options) && $options['excludeHolidays'] == true) {
+        $filters['no_holidays'] = true;
     }
 
     if (array_key_exists('day', $options)) {

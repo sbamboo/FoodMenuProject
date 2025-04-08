@@ -66,7 +66,7 @@ try {
             $veggy_entries,
             $non_veggy_entries
         );
-        $weeks[$week_number] = filterItems($year, $entries, $options);
+        $weeks[$week_number] = filterItems($year, "$week_number", $entries, $options);
     }
 
     // Assemble the response
