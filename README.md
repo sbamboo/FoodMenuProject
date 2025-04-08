@@ -171,7 +171,8 @@ Incase the api encounters an error rather then a `failed` request, the return is
 ```jsonc
 {
     "error": "<string:error>",
-    "msg": "<string:optional>"
+    "msg": "<string:optional>",
+    "status": "failed"
 }
 ```
 
