@@ -344,7 +344,14 @@ function filterItems(string $year, string $weekNumber, array $items, array $opti
     
     // Filter out specific day (day is index 1-7 of a week)
     if (array_key_exists('day', $options) && $options['day'] !== null) {
-        $items = [$options['day'] => $items[$options['day']]];
+        $new_items = [];
+        // Iterate the keys of the $items and if $key is not $options['day'] add it to $new_items
+        foreach ($items as $key => $item) {
+            if ($key == $options['day']) {
+                $new_items[$key] = $item;
+            }
+        }
+        $items = $new_items;
     }
 
     return $items;
