@@ -7,6 +7,10 @@
 *NTI Gymnasiet Skövde - 2025 - TE3s*
 <br><br>
 
+## Code assumptions
+In `/latest/index.php` the latest-api-version is assumed when defining the redirect!<br>
+In `/docs/index.php` the latest-api-version is assumed when setting `defaultVersion`!<br>
+
 
 ## Expected endpoints
 

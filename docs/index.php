@@ -3,8 +3,8 @@ require 'libs/Parsedown.php'; // Include the Parsedown library
 require 'libs/JsonHighlighter.php'; // Include the JsonHighlighter library
 
 // Determine which markdown file to load based on the URL parameter 'ver'
-$defaultVersion = 'v0';
-$version = isset($_GET['ver']) ? $_GET['ver'] : $defaultVersion; // Default to 'v0' if 'ver' is not set
+$defaultVersion = 'v1';
+$version = isset($_GET['ver']) ? $_GET['ver'] : $defaultVersion; // Default to 'v1' if 'ver' is not set
 $markdownFile = $version . '.md';
 $originalQueriedFileFound = TRUE;
 
