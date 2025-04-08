@@ -106,8 +106,7 @@ function getSeed(): array {
     // ?year=yyyy (returns seed for all weeks in year)
     // Else return seed for current week of the current year
 
-
-    $req_context = "/v0/foodmenu/";
+    $req_context = "/v1/foodmenu/";
 
     if(array_key_exists("date", $_REQUEST)){
         $date = $_REQUEST["date"];

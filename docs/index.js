@@ -8,8 +8,6 @@ const CLICKED_COPY_SVG = `<svg width="100%" height="100%" viewBox="0 0 24 24" fi
 
 window.onload = function () {
     document.querySelectorAll('.codeblock_wcopy').forEach(function (codeBlock) {
-
-        console.log(codeBlock)
     
         // Get the text content of the pre element, including any child code or span tags
         const textContent = codeBlock.textContent.trim();
