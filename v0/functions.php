@@ -69,8 +69,6 @@ function getEntries(): array {
     
     // Decode the JSON file
     $lists = json_decode($json, true);
-    
-    // Return [[...veggy_entries...],[...non_veggy_entries...]]
 
     // Ensure "veggy" and "non_veggy" fields
     if (!array_key_exists('veggy', $lists)) {
@@ -166,7 +164,7 @@ function getSeed(): array {
 function getOptionsFromURL(array $params): array {
     $options = [
         "excludeWeekends" => false,
-        "excludeRedDays" => false,
+        "excludeHolidays" => false,
         "day" => null
     ];
 
@@ -175,9 +173,9 @@ function getOptionsFromURL(array $params): array {
         $options['excludeWeekends'] = true;
     }
 
-    // ?excludeRedDays url parameter
-    if (array_key_exists('excludeRedDays', $params)) {
-        $options['excludeRedDays'] = true;
+    // ?excludeHolidays url parameter
+    if (array_key_exists('excludeHolidays', $params)) {
+        $options['excludeHolidays'] = true;
     }
 
     // ?day=<int:1-7> url parameter
