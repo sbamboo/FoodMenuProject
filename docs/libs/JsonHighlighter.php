@@ -5,9 +5,6 @@
 # PHP Json Highligher v.0.0
 # https://github.com/sbamboo/php-json-highlighter
 #
-# Simon Kalmi Claesson
-# https://github.com/sbamboo
-#
 #
 
 declare(strict_types=1);

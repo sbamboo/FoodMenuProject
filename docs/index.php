@@ -2,6 +2,43 @@
 require 'libs/Parsedown.php'; // Include the Parsedown library
 require 'libs/JsonHighlighter.php'; // Include the JsonHighlighter library
 
+// Determine which markdown file to load based on the URL parameter 'ver'
+$defaultVersion = 'v0';
+$version = isset($_GET['ver']) ? $_GET['ver'] : $defaultVersion; // Default to 'v0' if 'ver' is not set
+$markdownFile = $version . '.md';
+$originalQueriedFileFound = TRUE;
+
+// Check if the markdown file exists
+if (!file_exists($markdownFile)) {
+    $markdownFile = $defaultVersion . '.md';
+    $originalQueriedFileFound = FALSE;
+}
+
+// Read the chosen markdown file
+$markdown = file_get_contents($markdownFile);
+
+// Append warning if the original queried file was not found
+if (!$originalQueriedFileFound) {
+    $warning = <<<EOT
+    \n\n```notice.red
+    The requested version "%version%" was not found, loaded "%defaultVersion%" instead!
+    ```\n\n
+    EOT;
+    $warning = str_replace('%version%', $version, $warning);
+    $warning = str_replace('%defaultVersion%', $defaultVersion, $warning);
+    $markdown = $warning . $markdown;
+}
+
+// Parse the special markdown
+$markdown = parseSpecialMarkdown($markdown);
+
+// Wrap API code blocks with <div class="codeblock_api">
+$markdown = wrapApiCodeBlocks($markdown);
+
+// Convert markdown to HTML using Parsedown
+$Parsedown = new Parsedown();
+$parsedContent = $Parsedown->text($markdown);
+
 // Function to get the base URL without /docs
 function getBaseUrl() {
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
@@ -106,43 +143,6 @@ function wrapApiCodeBlocks($content) {
 
     return $content;
 }
-
-// Determine which markdown file to load based on the URL parameter 'ver'
-$defaultVersion = 'v0';
-$version = isset($_GET['ver']) ? $_GET['ver'] : $defaultVersion; // Default to 'v0' if 'ver' is not set
-$markdownFile = $version . '.md';
-$originalQueriedFileFound = TRUE;
-
-// Check if the markdown file exists
-if (!file_exists($markdownFile)) {
-    $markdownFile = $defaultVersion . '.md';
-    $originalQueriedFileFound = FALSE;
-}
-
-// Read the chosen markdown file
-$markdown = file_get_contents($markdownFile);
-
-// Append warning if the original queried file was not found
-if (!$originalQueriedFileFound) {
-    $warning = <<<EOT
-    \n\n```notice.red
-    The requested version "%version%" was not found, loaded "%defaultVersion%" instead!
-    ```\n\n
-    EOT;
-    $warning = str_replace('%version%', $version, $warning);
-    $warning = str_replace('%defaultVersion%', $defaultVersion, $warning);
-    $markdown = $warning . $markdown;
-}
-
-// Parse the special markdown
-$markdown = parseSpecialMarkdown($markdown);
-
-// Wrap API code blocks with <div class="codeblock_api">
-$markdown = wrapApiCodeBlocks($markdown);
-
-// Convert markdown to HTML using Parsedown
-$Parsedown = new Parsedown();
-$parsedContent = $Parsedown->text($markdown);
 ?>
 
 <!DOCTYPE html>
