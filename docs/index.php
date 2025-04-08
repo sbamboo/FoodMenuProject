@@ -107,7 +107,7 @@ function parseSpecialMarkdown($content) {
 
                 // Add blocks
                 $typename = str_replace('api.', '', $type);
-                $block = '<pre class="codeblock_api_' . $typename . '">' . $block . '</pre>';
+                $block = '<pre class="codeblock_api_' . $typename . '"><span class="api-codeblock-title">Response</span>' . $block . '</pre>';
             }
         }
         
@@ -137,7 +137,7 @@ function wrapApiCodeBlocks($content) {
     // Match when codeblock_api_request is directly followed by codeblock_api_response
     $content = preg_replace_callback('/<pre class="codeblock_api_request codeblock_wcopy">([\s\S]*?)<\/pre>\s*<pre class="codeblock_api_response">([\s\S]*?)<\/pre>/', function ($matches) {
         // Wrap the pair of <pre> blocks inside a <div class="codeblock_api">
-        $wrappedBlock = '<div class="codeblock_api">' . $matches[0] . '</div>';
+        $wrappedBlock = '<div class="codeblock_api"><span class="api-codeblock-title api-codeblock-title-request">Request</span>' . $matches[0] . '</div>';
         return $wrappedBlock;
     }, $content);
 

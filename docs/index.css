@@ -75,6 +75,18 @@ p:has(> code) {
 
 .codeblock_api_request {
     padding: 10px;
+    padding-top: 0px;
+}
+
+*:not(.codeblock_api)>.codeblock_api_request {
+    display: flex;
+    width: fit-content;
+    border: 1.5px solid var(--codeblock-border-color);
+    border-radius: 10px;
+    background-color: var(--codeblock-background);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
 }
 
 .codeblock_api_response {
@@ -175,6 +187,23 @@ p:has(> code) {
     display: flex;
     flex-direction: row;
     position: relative;
+}
+
+.api-codeblock-title {
+    color: rgb(163, 162, 162);
+    font-weight: 700;
+    font-size: 0.9em;
+}
+
+.api-codeblock-title-request {
+    display: block;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.hflex {
+    display: flex;
+    flex-direction: row;
 }
 
 p {

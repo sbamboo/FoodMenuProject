@@ -105,6 +105,14 @@ class JsonHighlighter {
                 $non_starcomment = str_replace('%type:string%', '<span class="json-type-comment json-string">&lt;string&gt;</span>', $non_starcomment);
                 $has_found_type_comment = TRUE;
             }
+            if (strpos($comment, '%type:string-error%') !== false) {
+                $non_starcomment = str_replace('%type:string-error%', '<span class="json-type-comment json-string json-string-error">&lt;string:error&gt;</span>', $non_starcomment);
+                $has_found_type_comment = TRUE;
+            }
+            if (strpos($comment, '%type:string-optional%') !== false) {
+                $non_starcomment = str_replace('%type:string-optional%', '<span class="json-type-comment json-string json-string-optional">&lt;string:optional&gt;</span>', $non_starcomment);
+                $has_found_type_comment = TRUE;
+            }
             
             if ($has_found_type_comment == TRUE) {
                 return $non_starcomment;
