@@ -11,7 +11,7 @@
     <main>
         <h1>FoodMenu API - Group1</h1>
         <div class="links">
-            <a href="./v0/index.php">Service</a>
+            <a href="./v1/index.php">Service</a>
             <a href="./docs">Documentation / API Usage</a>
         </div>
     </main>

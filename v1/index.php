@@ -48,7 +48,7 @@ try {
     if (!isset($_REQUEST['date']) && !isset($_REQUEST['year']) && !isset($_REQUEST['week'])) {
         echo json_encode([
             'error' => "MissingParameters",
-            'msg' => 'Not all required parameters where given! Please supply either a specific date or alterantively a year and/or week-number. (See api docs)',
+            'msg' => "Not all required url parameters where given! Please supply either a specific date using '?date=yyyy-mm-dd', or alternatively a year and/or week with '?year=yyyy' and/or '?week=xx'. (See api docs)",
             'status' => 'failed'
         ], JSON_UNESCAPED_UNICODE);
         exit;
