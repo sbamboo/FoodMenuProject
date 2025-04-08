@@ -106,14 +106,6 @@ function getSeed(): array {
     // ?year=yyyy (returns seed for all weeks in year)
     // Else return seed for current week of the current year
 
-    /*
-    req_context:
-        /v0/foodmenu/date
-        /v0/foodmenu/year
-        /v0/foodmenu/week
-    */
-
-    // If ?date seed is year and week-nr for that date, also set $_REQUEST["day"] to string-of-int for the days index in the week
 
     $req_context = "/v0/foodmenu/";
 
@@ -151,9 +143,8 @@ function getSeed(): array {
             for ($i=0; $i < 52; $i++) {
                 array_push($seeds, $year . ";" . $i + 1);
             }
-        } else{
-            //Missing values ????
         }
+        //If values are missing its caught earlier
     }
     
     if($seeds == []){
