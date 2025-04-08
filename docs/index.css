@@ -37,6 +37,7 @@ pre:not(.notice_red)>code,
 pre:not(.notice_yellow)>code,
 pre:not(.notice_green)>code,
 pre:not(.notice_gray)>code {
+    display: block;
     width: fit-content;
     border: 1.5px solid var(--codeblock-border-color);
     border-radius: 10px;

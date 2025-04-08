@@ -71,7 +71,7 @@ class JsonHighlighter {
         foreach (self::$comments as $index => $comment) {
             $placeholder = '__COMMENT_PLACEHOLDER_' . $index . '__';
             if ($color == TRUE) {
-                $highlightedComment = self::highlightDotDotDotComments($comment);
+                $highlightedComment = self::highlightComments($comment);
                 $json = str_replace($placeholder, $highlightedComment, $json);
             } else {
                 $json = str_replace($placeholder, $comment, $json);
@@ -80,15 +80,42 @@ class JsonHighlighter {
         return $json;
     }
 
-    private static function highlightDotDotDotComments(string $comment): string {
+    private static function highlightComments(string $comment): string {
         // Regex to match "//..." (with optional surrounding whitespace)
         $pattern = '/^\/\/(\s*)(\.\.\.)(\s*)$/';
 
         if (preg_match($pattern, $comment, $matches)) {
             // If the entire comment is just "..." (with optional whitespace)
             return $matches[1] . '<span class="json-more-comment">' . $matches[2] . '</span>' . $matches[3];
+        } else {
+            // Instead do if "" in comment, replace
+            $non_starcomment = str_replace('/*', '', $comment);
+            $non_starcomment = str_replace('*/', '', $non_starcomment);
+            $has_found_type_comment = FALSE;
+            if (strpos($comment, '%type:bool%') !== false) {
+                $non_starcomment = str_replace('%type:bool%', '<span class="json-type-comment json-bool">&lt;bool&gt;</span>', $non_starcomment);
+                $has_found_type_comment = TRUE;
+            }
+            if (strpos($comment, '%type:int%') !== false) {
+                $non_starcomment = str_replace('%type:int%', '<span class="json-type-comment json-int">&lt;int&gt;</span>', $non_starcomment);
+                $has_found_type_comment = TRUE;
+            }
+            if (strpos($comment, '%type:null%') !== false) {
+                $non_starcomment = str_replace('%type:null%', '<span class="json-type-comment json-null">&lt;null&gt;</span>', $non_starcomment);
+                $has_found_type_comment = TRUE;
+            }
+            if (strpos($comment, '%type:string%') !== false) {
+                $non_starcomment = str_replace('%type:string%', '<span class="json-type-comment json-string">&lt;string&gt;</span>', $non_starcomment);
+                $has_found_type_comment = TRUE;
+            }
+            
+            if ($has_found_type_comment == TRUE) {
+                return $non_starcomment;
+            } else {
+                return '<span class="json-comment">' . $comment . '</span>';
+            }
+            return $non_starcomment;
         }
-
         // Return the original comment if it's not a "..." comment
         return $comment;
     }
