@@ -47,7 +47,15 @@ After loading the markdown it applies specific parsing to codeblocks.
 In codeblocks with `api.request` we replace `{url}` with span-formatted string. We also wrap `?` and `&` after the last url-segment with spans.
 In codeblocks with `api.response` or `json` we color format the text as JSON using spans.
 When `api.request` codeblocks next to `api.response` codeblocks they get styled together.
-For codeblocks with `notice.red`/`notice.yellow`/`notice.green`/`notice.orange`/`notice.blue`/`notice.gray`/`notice.purple` they get some padding and coloring to signify them on the site.
+For codeblocks with `notice.red`/`notice.yellow`/`notice.green`/`notice.orange`/`notice.blue`/`notice.gray`/`notice.purple` they get some padding and coloring to signify them on the site.<br>
+
+In a codeblock where JSON is formatted one can write some custom comments that will be specially formatted:<br>
+ `//...` => `...`<br>
+ `/*%type:bool%*/` => `<bool>`<br>
+ `/*%type:int%*/` => `<int>`<br>
+ `/*%type:null%*/` => `<null>`<br>
+ `/*%type:string%*/` => `<string>`
+<br><br>
 ### PHP
 Randomization
 ```php
