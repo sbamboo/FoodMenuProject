@@ -40,8 +40,19 @@ register_shutdown_function('shutdownHandler');
 
 // Main Logic
 try {
+
     // Get filter options
     $options = getOptionsFromURL($_REQUEST);
+
+    // If not $_REQUEST contains either $date or $year or $week return error
+    if (!isset($options['date']) && !isset($options['year']) && !isset($options['week'])) {
+        echo json_encode([
+            'error' => "MissingParameters",
+            'msg' => 'Not all required parameters where given! Please supply either a specific date or alterantively a year and/or week-number. (See api docs)',
+            'status' => 'failed'
+        ], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
 
     // Get the seeds
     $seed_info = getSeed(); //MARK: For now hardcode
@@ -83,7 +94,6 @@ try {
     exit;
 
 } catch (Throwable $e) {
-    /*
     $e_name = get_class($e);
     // Fatal error handling
     echo json_encode([
@@ -92,8 +102,5 @@ try {
         'status' => 'failed'
     ], JSON_UNESCAPED_UNICODE);
     exit;
-    */
-    // throw it again for now
-    throw $e;
 }
 ?>

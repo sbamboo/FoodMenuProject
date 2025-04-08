@@ -116,6 +116,7 @@ function getSeed(): array {
     // If ?date seed is year and week-nr for that date, also set $_REQUEST["day"] to string-of-int for the days index in the week
 
     $req_context = "/v0/foodmenu/";
+
     if(array_key_exists("date", $_REQUEST)){
         $date = $_REQUEST["date"];
     }
